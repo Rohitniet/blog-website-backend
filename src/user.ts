@@ -1,10 +1,11 @@
 import express, { Request, Response } from "express"
 import {z} from "zod"
-import { signin_zod, signup_zod } from "./validation"
+import { blog_zod, signin_zod, signup_zod } from "./validation"
 import bcrypt from "bcrypt"
-import { user_model } from "./db"
+import { blog_model, user_model } from "./db"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
+import { middleware } from "./middleware"
 
 
 export const userroute= express.Router()
@@ -97,4 +98,64 @@ userroute.post("/signin" , async(req: Request,res:Response) => {
 
     }
 
+})
+
+userroute.post("/addblog",middleware ,async (req,res)=>{
+
+    const validated= blog_zod.parse(req.body)
+    //@ts-ignore
+    const userid= req.id
+   
+
+    const  title= validated.title
+    const  content= validated.content
+    try{
+
+    await blog_model.create({
+
+        userid,
+        title,
+        content
+
+    })
+ 
+    res.json({
+        "message":"your blog has been created"
+
+    })
+
+}catch(e){
+    res.json({
+        "error": e
+    })
+}
+})
+
+
+userroute.get("/allblog",middleware,async(req,res)=>{
+
+
+    //@ts-ignore
+    const userid = req.id
+    console.log(userid)
+
+    try{
+    const blogs =await blog_model.find({
+        userid
+    })
+
+    if(blogs){
+        res.json({
+            "blogs":blogs
+        })
+    }
+
+
+
+}catch(e){
+
+    res.json({
+        "error": e
+    })
+}
 })

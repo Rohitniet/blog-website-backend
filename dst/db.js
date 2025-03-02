@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.user_model = void 0;
+exports.blog_model = exports.user_model = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const schema = mongoose_1.default.Schema;
 const objectid = schema.ObjectId;
@@ -42,4 +42,10 @@ const user_schema = new schema({
     email: { type: String, unique: true },
     password: String
 });
+const blog_schema = new schema({
+    userid: objectid,
+    title: String,
+    content: String
+});
 exports.user_model = (0, mongoose_1.model)("user", user_schema);
+exports.blog_model = (0, mongoose_1.model)("blog", blog_schema);

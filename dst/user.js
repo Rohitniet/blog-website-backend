@@ -19,6 +19,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const db_1 = require("./db");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const middleware_1 = require("./middleware");
 exports.userroute = express_1.default.Router();
 dotenv_1.default.config();
 const jwt_secret = process.env.jwt_secret;
@@ -77,5 +78,47 @@ exports.userroute.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0
         });
     }
     catch (e) {
+    }
+}));
+exports.userroute.post("/addblog", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const validated = validation_1.blog_zod.parse(req.body);
+    //@ts-ignore
+    const userid = req.id;
+    const title = validated.title;
+    const content = validated.content;
+    try {
+        yield db_1.blog_model.create({
+            userid,
+            title,
+            content
+        });
+        res.json({
+            "message": "your blog has been created"
+        });
+    }
+    catch (e) {
+        res.json({
+            "error": e
+        });
+    }
+}));
+exports.userroute.get("/allblog", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //@ts-ignore
+    const userid = req.id;
+    console.log(userid);
+    try {
+        const blogs = yield db_1.blog_model.find({
+            userid
+        });
+        if (blogs) {
+            res.json({
+                "blogs": blogs
+            });
+        }
+    }
+    catch (e) {
+        res.json({
+            "error": e
+        });
     }
 }));

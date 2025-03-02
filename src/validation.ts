@@ -11,3 +11,9 @@ export const signin_zod= z.object({
     password: z.string().min(5),
    
 })
+
+export const blog_zod =z.object({
+    title : z.string(),
+    content :z.string(),
+    
+})

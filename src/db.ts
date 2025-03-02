@@ -1,4 +1,5 @@
 import mongoose, { model } from "mongoose"
+import { string } from "zod"
 
 const schema =mongoose.Schema
 
@@ -12,6 +13,12 @@ const user_schema= new schema({
 })
 
 
+const blog_schema= new schema({
+    userid:objectid,
+    title: String,
+    content:String
+})
+
 
 
 
@@ -22,3 +29,4 @@ const user_schema= new schema({
 
 
 export const user_model=  model("user",user_schema);
+export const blog_model=  model("blog",blog_schema);
