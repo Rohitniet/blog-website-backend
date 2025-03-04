@@ -159,3 +159,47 @@ userroute.get("/allblog",middleware,async(req,res)=>{
     })
 }
 })
+
+
+userroute.delete("/delblog",middleware, async (req,res)=>{
+
+    const title = req.body.title
+
+    //@ts-ignore
+    const userid= req.id
+const founded = await blog_model.findOne({
+
+    userid,
+    title
+})
+if(founded){
+    const result = await blog_model.deleteOne({
+        userid,
+        title
+    })
+
+
+
+
+
+    
+    if(result){
+        res.json({
+            "message":"your blog has been deleted"
+        })
+    }else{
+        res.json({
+            "message":"error in deleting "
+        })
+    }
+
+}else{
+    res.json({
+        "message":"your blog dosent exist"
+    })
+}
+
+
+
+    
+})

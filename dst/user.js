@@ -122,3 +122,33 @@ exports.userroute.get("/allblog", middleware_1.middleware, (req, res) => __await
         });
     }
 }));
+exports.userroute.delete("/delblog", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const title = req.body.title;
+    //@ts-ignore
+    const userid = req.id;
+    const founded = yield db_1.blog_model.findOne({
+        userid,
+        title
+    });
+    if (founded) {
+        const result = yield db_1.blog_model.deleteOne({
+            userid,
+            title
+        });
+        if (result) {
+            res.json({
+                "message": "your blog has been deleted"
+            });
+        }
+        else {
+            res.json({
+                "message": "error in deleting "
+            });
+        }
+    }
+    else {
+        res.json({
+            "message": "your blog dosent exist"
+        });
+    }
+}));
