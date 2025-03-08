@@ -101,6 +101,7 @@ userroute.post("/signin" , async(req: Request,res:Response) => {
 })
 
 userroute.post("/addblog",middleware ,async (req,res)=>{
+    console.log("here")
 
     const validated= blog_zod.parse(req.body)
     //@ts-ignore
@@ -142,7 +143,7 @@ userroute.get("/allblog",middleware,async(req,res)=>{
     try{
     const blogs =await blog_model.find({
         userid
-    })
+    }).populate("userid")
 
     if(blogs){
         res.json({

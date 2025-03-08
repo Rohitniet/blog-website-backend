@@ -81,6 +81,7 @@ exports.userroute.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0
     }
 }));
 exports.userroute.post("/addblog", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("here");
     const validated = validation_1.blog_zod.parse(req.body);
     //@ts-ignore
     const userid = req.id;
@@ -109,7 +110,7 @@ exports.userroute.get("/allblog", middleware_1.middleware, (req, res) => __await
     try {
         const blogs = yield db_1.blog_model.find({
             userid
-        });
+        }).populate("userid");
         if (blogs) {
             res.json({
                 "blogs": blogs

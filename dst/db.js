@@ -43,9 +43,10 @@ const user_schema = new schema({
     password: String
 });
 const blog_schema = new schema({
-    userid: objectid,
+    userid: { type: objectid, ref: "user" },
     title: String,
-    content: String
+    content: String,
+    date: { type: Date, default: Date.now }
 });
 exports.user_model = (0, mongoose_1.model)("user", user_schema);
 exports.blog_model = (0, mongoose_1.model)("blog", blog_schema);

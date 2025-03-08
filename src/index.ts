@@ -3,13 +3,17 @@ import { userroute } from "./user"
 import mongoose, { connections } from "mongoose"
 import dotenv from "dotenv"
 import { string } from "zod"
+import cors from "cors"
 dotenv.config()
+
+
 
 const db_string=process.env.db
 
 const app=express()
 
 app.use(express.json())
+app.use(cors())
 
 
 app.use("/user",userroute)

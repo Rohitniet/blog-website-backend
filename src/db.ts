@@ -1,5 +1,5 @@
 import mongoose, { model } from "mongoose"
-import { string } from "zod"
+import { date, string } from "zod"
 
 const schema =mongoose.Schema
 
@@ -14,9 +14,10 @@ const user_schema= new schema({
 
 
 const blog_schema= new schema({
-    userid:objectid,
+    userid:{type:objectid ,ref:"user"},
     title: String,
-    content:String
+    content:String,
+    date:{type:Date ,default:Date.now}
 })
 
 

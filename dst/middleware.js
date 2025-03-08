@@ -19,6 +19,7 @@ dotenv_1.default.config();
 const jwt_secret = process.env.jwt_secret;
 function middleware(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("middleware");
         if (!jwt_secret) {
             return;
         }
