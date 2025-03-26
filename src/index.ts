@@ -4,6 +4,7 @@ import mongoose, { connections } from "mongoose"
 import dotenv from "dotenv"
 import { string } from "zod"
 import cors from "cors"
+import { commonroute } from "./common"
 dotenv.config()
 
 
@@ -17,6 +18,7 @@ app.use(cors())
 
 
 app.use("/user",userroute)
+app.use("/common",commonroute)
 
 
 

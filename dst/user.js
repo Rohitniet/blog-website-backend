@@ -80,11 +80,31 @@ exports.userroute.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0
     catch (e) {
     }
 }));
+exports.userroute.get("/detail", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("hitting it");
+    try {
+        //@ts-ignore
+        const userid = req.id;
+        console.log(userid);
+        const response = yield db_1.user_model.findOne({
+            "_id": userid
+        });
+        res.json({
+            "user": response
+        });
+    }
+    catch (e) {
+        res.json({
+            "message": "error in fetching user"
+        });
+    }
+}));
 exports.userroute.post("/addblog", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("here");
+    console.log("here is add blog");
     const validated = validation_1.blog_zod.parse(req.body);
     //@ts-ignore
     const userid = req.id;
+    console.log(userid);
     const title = validated.title;
     const content = validated.content;
     try {
@@ -106,7 +126,6 @@ exports.userroute.post("/addblog", middleware_1.middleware, (req, res) => __awai
 exports.userroute.get("/allblog", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //@ts-ignore
     const userid = req.id;
-    console.log(userid);
     try {
         const blogs = yield db_1.blog_model.find({
             userid
@@ -152,4 +171,8 @@ exports.userroute.delete("/delblog", middleware_1.middleware, (req, res) => __aw
             "message": "your blog dosent exist"
         });
     }
+}));
+exports.userroute.get("/share", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //@ts-ignore
+    const userid = req.userid;
 }));

@@ -9,7 +9,7 @@ const jwt_secret=process.env.jwt_secret
 
 export async function middleware (req:Request,res:Response,next:NextFunction) {
 
-    console.log("middleware")
+    
 
 
     if(!jwt_secret){
@@ -26,6 +26,7 @@ export async function middleware (req:Request,res:Response,next:NextFunction) {
         }else{
 
             const id  =  user.id
+            console.log(id+  "of middle ware")
 
             //@ts-ignore
             req.id= id;

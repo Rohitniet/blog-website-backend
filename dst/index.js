@@ -17,12 +17,14 @@ const user_1 = require("./user");
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
+const common_1 = require("./common");
 dotenv_1.default.config();
 const db_string = process.env.db;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use("/user", user_1.userroute);
+app.use("/common", common_1.commonroute);
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         if (!db_string) {

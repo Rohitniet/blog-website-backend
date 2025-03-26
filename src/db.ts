@@ -17,7 +17,7 @@ const blog_schema= new schema({
     userid:{type:objectid ,ref:"user"},
     title: String,
     content:String,
-    date:{type:Date ,default:Date.now}
+    date:{type:Date,default:Date.now}
 })
 
 

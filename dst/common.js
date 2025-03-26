@@ -12,32 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.middleware = middleware;
-const dotenv_1 = __importDefault(require("dotenv"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-dotenv_1.default.config();
-const jwt_secret = process.env.jwt_secret;
-function middleware(req, res, next) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!jwt_secret) {
-            return;
-        }
-        const token = req.headers.token;
-        if (typeof token === "string") {
-            const user = yield jsonwebtoken_1.default.verify(token, jwt_secret);
-            if (typeof user === "string") {
-                return;
-            }
-            else {
-                const id = user.id;
-                console.log(id + "of middle ware");
-                //@ts-ignore
-                req.id = id;
-                next();
-            }
-        }
-        else {
-            return;
-        }
-    });
-}
+exports.commonroute = void 0;
+const express_1 = __importDefault(require("express"));
+const db_1 = require("./db");
+exports.commonroute = express_1.default.Router();
+exports.commonroute.post('/blogs', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const index = req.body.page || 1;
+    const limit = 8;
+    const skip = (index - 1) * limit;
+    try {
+        const blogs = yield db_1.blog_model.find().populate("userid").skip(skip).limit(8);
+        res.json({
+            "blogs": blogs
+        });
+    }
+    catch (e) {
+        res.json({
+            message: "error in reciving the blogs"
+        });
+    }
+}));

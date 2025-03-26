@@ -100,12 +100,36 @@ userroute.post("/signin" , async(req: Request,res:Response) => {
 
 })
 
+userroute.get("/detail",middleware,async (req,res)=>{
+    console.log("hitting it")
+
+  try{
+    //@ts-ignore
+    const userid= req.id
+    console.log(userid)
+    const response =await user_model.findOne({
+       "_id": userid
+    })
+    res.json({
+        "user":response
+    })
+  }catch(e){
+    res.json({
+        "message":"error in fetching user"
+    })
+  }
+    
+})
+
+
+
 userroute.post("/addblog",middleware ,async (req,res)=>{
-    console.log("here")
+    console.log("here is add blog")
 
     const validated= blog_zod.parse(req.body)
     //@ts-ignore
     const userid= req.id
+    console.log(userid)
    
 
     const  title= validated.title
@@ -138,7 +162,7 @@ userroute.get("/allblog",middleware,async(req,res)=>{
 
     //@ts-ignore
     const userid = req.id
-    console.log(userid)
+  
 
     try{
     const blogs =await blog_model.find({
@@ -201,6 +225,17 @@ if(founded){
 }
 
 
+
+    
+})
+
+userroute.get("/share", middleware,async (req,res)=>{
+
+
+    //@ts-ignore
+    const userid=req.userid
+
+    
 
     
 })
