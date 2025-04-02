@@ -172,6 +172,21 @@ exports.userroute.delete("/delblog", middleware_1.middleware, (req, res) => __aw
         });
     }
 }));
+exports.userroute.get("/getblog", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const title = req.body.title;
+    //@ts-ignore
+    const userid = req.id;
+    const blog = yield db_1.blog_model.findOne({
+        title,
+        userid
+    });
+    console.log(blog);
+    //@ts-ignore
+    const blogjson = JSON.parse(blog === null || blog === void 0 ? void 0 : blog.content);
+    res.json({
+        content: blogjson
+    });
+}));
 exports.userroute.get("/share", middleware_1.middleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //@ts-ignore
     const userid = req.userid;

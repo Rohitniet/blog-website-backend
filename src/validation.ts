@@ -1,4 +1,4 @@
-import {z} from "zod"
+import {object, z} from "zod"
 
 export const signup_zod= z.object({
     email: z.string().email(),

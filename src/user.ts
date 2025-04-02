@@ -3,7 +3,7 @@ import {z} from "zod"
 import { blog_zod, signin_zod, signup_zod } from "./validation"
 import bcrypt from "bcrypt"
 import { blog_model, user_model } from "./db"
-import jwt from "jsonwebtoken"
+import jwt, { JsonWebTokenError } from "jsonwebtoken"
 import dotenv from "dotenv"
 import { middleware } from "./middleware"
 
@@ -227,6 +227,28 @@ if(founded){
 
 
     
+})
+
+userroute.get("/getblog",middleware,async(req,res)=>{
+
+    const title=req.body.title;
+    //@ts-ignore
+    const userid=req.id
+    
+
+    const blog= await blog_model.findOne({
+
+        title,
+        userid
+    })
+    
+
+    //@ts-ignore
+    const blogjson= JSON.parse(blog?.content)
+
+    res.json({
+        content:blogjson
+    })
 })
 
 userroute.get("/share", middleware,async (req,res)=>{
