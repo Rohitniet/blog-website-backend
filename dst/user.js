@@ -180,7 +180,6 @@ exports.userroute.get("/getblog", middleware_1.middleware, (req, res) => __await
         title,
         userid
     });
-    console.log(blog);
     //@ts-ignore
     const blogjson = JSON.parse(blog === null || blog === void 0 ? void 0 : blog.content);
     res.json({
